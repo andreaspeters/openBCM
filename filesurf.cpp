@@ -33,7 +33,9 @@
 //19980925 OE3DZW limited size of dir to ca. 167 under DOS
 //19981001 OE3DZW fixed wyapp
 //20041227 DH6BB  add BMAIL command
+//20241011 DC6AP  fixed string operator of _SEPS path
 
+#include <string>
 #include "baycom.h"
 
 #ifdef FILESURF
@@ -391,11 +393,11 @@ void filesurf::processpath (char *path)
   char *pointer, *pointer2;
 
   strcat(path, _SEPS);
-  while ((pointer = strstr(path, _SEPS""_SEPS)) != NULL)
+  while ((pointer = strstr(path, (_SEPS + std::string("") + _SEPS).c_str())) != NULL)
     memmove(pointer, pointer + 1, strlen(pointer + 1) + 1);
-  while ((pointer = strstr(path, _SEPS"."_SEPS)) != NULL)
+  while ((pointer = strstr(path, (_SEPS + std::string(".") + _SEPS).c_str())) != NULL)
     memmove(pointer, pointer + 2, strlen(pointer + 2) + 1);
-  while ((pointer = strstr(path, _SEPS".."_SEPS)) != NULL)
+  while ((pointer = strstr(path, (_SEPS + std::string("..") + _SEPS).c_str())) != NULL)
   {
     memmove(pointer, pointer + 3, strlen(pointer + 3) + 1);
     if (pointer == path) break;

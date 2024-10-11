@@ -20,9 +20,11 @@
 // 20040207 DH6BB  Implementierung STOR
 // 20040208 DH6BB  Check wo geschrieben werden darf
 // 20040514 DH6BB  Wiederaufnahme abgebrochener Downloads mit "REST" moeglich
+// 20241011 DC6AP  fixed string operator of _SEPS path 
 
  ***************************************************************/
 
+#include <string>
 #include "baycom.h"
 
 #ifdef __UNIX__
@@ -853,11 +855,11 @@ void ftpd::processpath (char *path)
   char *pointer, *pointer2;
 
   strcat(path, _SEPS);
-  while ((pointer = strstr(path, _SEPS""_SEPS)) != NULL)
+  while ((pointer = strstr(path, (_SEPS + std::string("") + _SEPS).c_str())) != NULL)
     memmove(pointer, pointer + 1, strlen(pointer + 1) + 1);
-  while ((pointer = strstr(path, _SEPS"."_SEPS)) != NULL)
+  while ((pointer = strstr(path, (_SEPS + std::string(".") + _SEPS).c_str())) != NULL)
     memmove(pointer, pointer + 2, strlen(pointer + 2) + 1);
-  while ((pointer = strstr(path, _SEPS".."_SEPS)) != NULL)
+  while ((pointer = strstr(path, (_SEPS + std::string("..") + _SEPS).c_str())) != NULL)
   {
     memmove(pointer, pointer + 3, strlen(pointer + 3) + 1);
     if (pointer == path) break;
@@ -889,15 +891,15 @@ void ftpd::get_intropath (char *path)
   char *pointer, *pointer2;
 
   strcat(path, _SEPS);
-  while ((pointer = strstr(path, _SEPS""_SEPS)) != NULL)
+  while ((pointer = strstr(path, (_SEPS + std::string("") + _SEPS).c_str())) != NULL)
     memmove(pointer, pointer + 1, strlen(pointer + 1) + 1);
-  while ((pointer = strstr(path, _SEPS"."_SEPS)) != NULL)
+  while ((pointer = strstr(path, (_SEPS + std::string(".") + _SEPS).c_str())) != NULL)
     memmove(pointer, pointer + 2, strlen(pointer + 2) + 1);
 #ifndef __UNIX__
   while ((pointer = strstr(path, _SEPS)) != NULL)
     memmove(pointer, "//", strlen("//") + 1);
 #endif
-  while ((pointer = strstr(path, _SEPS".."_SEPS)) != NULL)
+  while ((pointer = strstr(path, (_SEPS + std::string("..") + _SEPS).c_str())) != NULL)
   {
     memmove(pointer, pointer + 3, strlen(pointer + 3) + 1);
     if (pointer == path) break;

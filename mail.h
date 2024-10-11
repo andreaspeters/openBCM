@@ -69,36 +69,9 @@
 //20031010 DH8YMB Userdatenbank neues Format in users4.bcm
 //20031226 DH6BB  FTP-Server fuer den Filesurf
 //20121226 DG4MFN added comment to AUTHOR_ID about modification for Linux GCC 4.x.x
+//20241011 DC6AP  OPSYSTEM has to be declare first
 
 /*---------------------------------------------------------------------------*/
-
-#ifndef GITVERSION
-#if defined(_WIN32) || defined(__MSDOS__)
- #include "gitver.h"
-#else
- #warning "no GIT version available, using a dummy g????"
- #define GITVERSION	"?????"
-#endif
-#endif
-
-#undef  VNUMMER
-#define VNUMMER         GITVERSION
-#define STD_BOXHEADER   "OpenBCM"
-#define LOGINSIGN       STD_BOXHEADER" V"VNUMMER" ("OPSYSTEM")"
-#define AUTHOR_ID	"(c) GNU GPL 1992-"YEAR" F. Radlherr, DL8MBT et al.\n" \
-                        "OpenBCM is maintained by Markus Baumann, DH8YMB\n"
-
-#if ! defined _BCMNET || ! defined _BCMNET_FWD || ! defined _BCMNET_LOGIN
-  #define CBMODEID      "(CB)"
-  #define CBSUPPORT     "CB-Version, Support by DJJ812/DO1MJJ\n"
-  #define WEBSITE_CB    "http://www.juerging.net/projekte/dbo812"
-#else
-  #define CBMODEID      "*CB-BCMNET*"
-  #define CBSUPPORT     "CB-BCMNET Version, Support by AS1GBF/AT5HPK/HF1BKM\n"
-  #define WEBSITE_CB    "http://www.afulinux.de/afulinux/cb-bcmnet"
-#endif
-#define WEBSITE         "https://github.com/oe5hpm/openbcm"
-
 #ifdef __MSDOS__
   #ifdef __FLAT__
     #ifdef _WIN32
@@ -126,6 +99,33 @@
     #endif
   #endif
 #endif
+
+#ifndef GITVERSION
+#if defined(_WIN32) || defined(__MSDOS__)
+ #include "gitver.h"
+#else
+ #warning "no GIT version available, using a dummy g????"
+ #define GITVERSION	"?????"
+#endif
+#endif
+
+#undef  VNUMMER
+#define VNUMMER         GITVERSION
+#define STD_BOXHEADER   "OpenBCM"
+#define LOGINSIGN       STD_BOXHEADER" V"VNUMMER" ("OPSYSTEM")"
+#define AUTHOR_ID	"(c) GNU GPL 1992-"YEAR" F. Radlherr, DL8MBT et al.\n" \
+                        "OpenBCM is maintained by Markus Baumann, DH8YMB\n"
+
+#if ! defined _BCMNET || ! defined _BCMNET_FWD || ! defined _BCMNET_LOGIN
+  #define CBMODEID      "(CB)"
+  #define CBSUPPORT     "CB-Version, Support by DJJ812/DO1MJJ\n"
+  #define WEBSITE_CB    "http://www.juerging.net/projekte/dbo812"
+#else
+  #define CBMODEID      "*CB-BCMNET*"
+  #define CBSUPPORT     "CB-BCMNET Version, Support by AS1GBF/AT5HPK/HF1BKM\n"
+  #define WEBSITE_CB    "http://www.afulinux.de/afulinux/cb-bcmnet"
+#endif
+#define WEBSITE         "https://github.com/oe5hpm/openbcm"
 
 //*************************************************************************
 //  path and file names

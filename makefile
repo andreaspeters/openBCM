@@ -1,49 +1,13 @@
 
 # Makefile for OpenBCM-Mailbox
-HOSTARCH := $(shell uname -m | \
-	sed -e s/i.86/x86/ \
-	    -e s/sun4u/sparc64/ \
-	    -e s/arm.*/arm/ \
-	    -e s/sa110/arm/ \
-	    -e s/ppc64/powerpc/ \
-	    -e s/ppc/powerpc/ \
-	    -e s/macppc/powerpc/\
-	    -e s/sh.*/sh/)
-export HOSTARCH
-
-GPP_VERSION3 := \
-  $(shell $(CROSS_COMPILE)g++ --version | grep g++ | sed 's/.*g++ (.*) //g' | sed 's/\..*//' | grep 3)
-GPP_VERSION33 := \
-  $(shell $(CROSS_COMPILE)g++-3.3 --version | grep g++ | sed 's/.*g++ (.*) //g' | sed 's/\..*//' | grep 3)
-GPP_VERSION4 := \
-  $(shell $(CROSS_COMPILE)g++ --version | grep g++ | sed 's/.*g++ (.*) //g' | sed 's/\..*//' | grep 4)
-
 GIT_VERSION := $(shell (git describe --abbrev=4 --dirty --always --tags || echo "?????") | sed s/-dirty/D/)
 
-ifeq "$(GPP_VERSION33)" "3"
-  CC = g++-3.3
-  LD = $(CC)
-else
-  CC = $(CROSS_COMPILE)g++
-  LD = $(CC)
-endif
-# ---------------------- armv6 (raspberry) specific ---------------------------
-ifeq ($(PLATTFORM), armv6)
-OUT	:= $(if $(OUT),$(OUT),out-armv6/)
-ARCHSPEC = -march=armv6zk -mfpu=vfp -mfloat-abi=hard -mcpu=arm1176jzf-s
-LFLAGS =
-# ---------------------- armv7hf (bur am335x pp) specific ---------------------
-else ifeq ($(PLATTFORM), armv7hf)
-OUT	:= $(if $(OUT),$(OUT),out-armv7hf/)
-ARCHSPEC = -march=armv7-a -mfpu=neon -mfloat-abi=hard -mcpu=cortex-a8
-LFLAGS = 
-# -------------------------- x86 (default) specific ---------------------------
-else ifeq ($(HOSTARCH), x86_64)
+CC = $(CROSS_COMPILE)g++ -fpermissive
+LD = $(CC)
+
 OUT	:= $(if $(OUT),$(OUT),out-x86_64/)
-ARCHSPEC = -m32
-LFLAGS   = -m32
-endif
-OUT	:= $(if $(OUT),$(OUT),out-x86_32/)
+#ARCHSPEC = -m32
+#LFLAGS   = -m32
 
 INC =
 LIB =
@@ -67,14 +31,8 @@ OPT = -fno-delete-null-pointer-checks -funsigned-char -DGITVERSION=\"$(GIT_VERSI
 OPT_WARN = -Wcomment -Wno-conversion -Wformat -Wno-unused \
 	   -Wreturn-type -Wno-write-strings -Wuninitialized -Wswitch -Wshadow
 
-ifeq "$(GPP_VERSION4)" "4"
-  ifeq "$(GPP_VERSION33)" "3"
-    override OPT = -O2 -fno-delete-null-pointer-checks -funsigned-char -fwritable-strings $(ARCHSPEC)
-  else
-    override OPT = -fno-delete-null-pointer-checks -funsigned-char -DGITVERSION=\"$(GIT_VERSION)\" $(ARCHSPEC)
-    override OPT_WARN = -Wcomment -Wno-conversion -Wformat -Wno-unused -Wreturn-type -Wno-write-strings 
-  endif
-endif
+override OPT = -fno-delete-null-pointer-checks -funsigned-char -DGITVERSION=\"$(GIT_VERSION)\" $(ARCHSPEC)
+override OPT_WARN = -Wcomment -Wno-conversion -Wformat -Wno-unused -Wreturn-type -Wno-write-strings 
 
 	   
 # enable following line to see all warnings
@@ -92,9 +50,9 @@ CFLAGS = $(INC) $(DEBUG) $(OPT) $(OPT_WARN)
 BCM_OBJ=ad_linux.o alter.o ax25k.o bcast.o bids.o binsplit.o cfgflex.o charset.o \
 	check.o cmd.o convers.o convert.o crc.o crontab.o desktop.o didadit.o dir.o \
 	extract.o fileio.o filesurf.o ftp.o fts.o fwd.o fwd_afwd.o fwd_rli.o fwd_fbb.o \
-	fwd_file.o grep.o hadr.o http.o help.o huffman.o init.o inout.o interfac.o \
+	fwd_file.o grep.o hadr.o help.o huffman.o init.o inout.o interfac.o \
 	l_flex.o login.o mailserv.o main.o macro.o memalloc.o md2md5.o mdpw.o \
-	morse.o msg.o nntp.o oldmaili.o ping.o pocsag.o pop3.o purge.o pw.o \
+	morse.o msg.o nntp.o http.o oldmaili.o ping.o pocsag.o pop3.o purge.o pw.o \
 	radio.o read.o reorg.o runutils.o sema.o send.o service.o smtp.o socket.o \
 	sysop.o task.o tell.o terminal.o time.o timerint.o tnc.o trace.o transfer.o \
 	tree.o tty.o usercomp.o users.o utils.o vidinit.o yapp.o wp.o wx.o \
@@ -160,22 +118,11 @@ $(OUT)l2util.o: l2util.cpp
 
 prepare:
 	@test -d $(OUT) || mkdir -p $(OUT)
-
-ifeq "$(GPP_VERSION3)" "3"
-	@echo "Usage of GCC 3.x compiler..."  
-else
- ifeq "$(GPP_VERSION4)" "4"
-  ifeq "$(GPP_VERSION33)" "3"
-	@echo "Usage of GCC 3.3 compiler..."  
-  else
 	@echo "Usage of GCC 4.x compiler..."  
-  endif
- endif
-endif
 
 $(OUT)$(PROGRAM): prepare  $(addprefix $(OUT),$(L2_OBJ)) $(addprefix $(OUT),$(BCM_OBJ))
 	@echo [ linking ] OpenBCM version $(GIT_VERSION)...
-	@$(LD) -o $(OUT)$(PROGRAM) \
+	@LD_LIBRARY_PATH=/usr/lib32 $(LD) -o $(OUT)$(PROGRAM) \
 	$(addprefix $(OUT),$(L2_OBJ)) \
 	$(addprefix $(OUT),$(BCM_OBJ)) \
 	$(LD_OPT)

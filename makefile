@@ -2,12 +2,12 @@
 # Makefile for OpenBCM-Mailbox
 GIT_VERSION := $(shell (git describe --abbrev=4 --dirty --always --tags || echo "?????") | sed s/-dirty/D/)
 
-CC = $(CROSS_COMPILE)g++ -fpermissive
+CC = $(CROSS_COMPILE)g++ -fpermissive -I/usr/include/i386-linux-gnu/c++/9 -L/usr/lib/i386-linux-gnu/
 LD = $(CC)
 
 OUT	:= $(if $(OUT),$(OUT),out-x86_64/)
-#ARCHSPEC = -m32
-#LFLAGS   = -m32
+ARCHSPEC = -m32
+LFLAGS   = -m32
 
 INC =
 LIB =

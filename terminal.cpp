@@ -244,8 +244,7 @@ void termqso (char *calls)
   else strncpy(term.partner, calls, 19);
   term.partner[19] = 0;
   subst(term.partner, ' ', 0); // cut off trailing via digis
-  subst(term.partner, '-', 0); // cut off ssid
-  putf("Downlink to %s setup...\n\n", term.partner);
+  putf("Downlink to %s setup...\n\n", calls);
   if (makeconnect(b->logincall, calls))
   {
     putf(">>> Connected to %s\n", term.partner);

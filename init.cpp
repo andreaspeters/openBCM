@@ -1231,12 +1231,12 @@ void mbinit (void)
   mbparsave(); // save new defaults
   if (! m.mycalls && mbcallok(m.boxname))
   {
-    sprintf(m.mycall[0], "%s-8", m.boxname);
+    sprintf(m.mycall[0], "%s-6", m.boxname);
     m.mycalls = 1;
   }
   if (m.mycalls == 1 && mbcallok(m.boxname))
   {
-    sprintf(m.mycall[1], "%s-7", m.boxname);
+    sprintf(m.mycall[1], "%s-5", m.boxname);
     m.mycalls = 2;
   }
   align_mycalls();

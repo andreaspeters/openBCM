@@ -113,19 +113,13 @@
 #define VNUMMER         GITVERSION
 #define STD_BOXHEADER   "OpenBCM"
 #define LOGINSIGN       STD_BOXHEADER" V"VNUMMER" ("OPSYSTEM")"
-#define AUTHOR_ID	"(c) GNU GPL 1992-"YEAR" F. Radlherr, DL8MBT et al.\n" \
-                        "OpenBCM is maintained by Markus Baumann, DH8YMB\n"
+#define AUTHOR_ID	      "(c) GNU GPL 1992-"YEAR" F. Radlherr, DL8MBT et al.\n" \
+                          "OpenBCM is maintained by Andreas Peters, DC6AP\n"
 
-#if ! defined _BCMNET || ! defined _BCMNET_FWD || ! defined _BCMNET_LOGIN
-  #define CBMODEID      "(CB)"
-  #define CBSUPPORT     "CB-Version, Support by DJJ812/DO1MJJ\n"
-  #define WEBSITE_CB    "http://www.juerging.net/projekte/dbo812"
-#else
-  #define CBMODEID      "*CB-BCMNET*"
-  #define CBSUPPORT     "CB-BCMNET Version, Support by AS1GBF/AT5HPK/HF1BKM\n"
-  #define WEBSITE_CB    "http://www.afulinux.de/afulinux/cb-bcmnet"
-#endif
-#define WEBSITE         "https://github.com/oe5hpm/openbcm"
+#define CBMODEID        "(CB)"
+#define CBSUPPORT       "Support by DBX349/DGR349\n"
+#define WEBSITE_CB      "http://github.com/andreaspeters/openBCM"
+#define WEBSITE         WEBSITE_CB
 
 //*************************************************************************
 //  path and file names

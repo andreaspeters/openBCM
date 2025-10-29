@@ -1,0 +1,70 @@
+FileSurf-Hilfe
+==============
+CD [Verzeichnis]              Wechselt in das angegebene Verzeichnis bzw.
+oder CHDIR                    zeigt das aktuelle Verzeichnis an, wenn kein
+                              Parameter angegeben wurde.
+
+XDIR                          Zeigt den Inhalt des aktuellen Verzeichnisses an,
+                              zusaetzlich auch den Einspieler und eine kurze
+                              Beschreibung, soweit dies verfuegbar ist.
+
+DIR [Optionen] [Verzeichnis]  Zeigt den Inhalt des angegebenen Verzeichnisses
+                              bzw. des aktuellen Verzeichnisses, wenn kein
+                              Parameter angegeben wurde.
+                              Moegliche Optionen:
+                              -D: Sortierung nach Datei-Modifikations-Datum
+                              -S: Sortierung nach Datei-Groesse
+                              -N: Keine Sortierung (d.h. Reihenfolge der
+                                  Erstellung der Dateien)
+
+LS [Optionen] [Verzeichnis]   Wie DIR, aber der Verzeichnis-Inhalt wird nur
+                              in Kurzform ausgegeben. Durch den Parameter
+                              -L kann auch mit diesem Befehl der Verzeichnis-
+                              inhalt in langer Form ausgegeben werden.
+
+PATH                          Zeigt die Verzeichnisse an, von den Dateien
+                              gelesen werden duerfen und in die ein User
+                              Dateien schreiben darf.
+
+NEW [Begriff]                 Listet alle Dateien die seit dem letzten "NEW"-
+                              Aufruf neu hinzugekommen sind. Zusaetzlich laesst
+                              sich die Suche nach einem "Begriff" einschraenken.
+
+FIND <Begriff>                Sucht "Begriff" in allen Filesurf-Dateinamen.
+
+INFO <Datei>                  Gibt eine Info zu der Datei aus.
+
+VIEW <Datei>                  Zeigt das Archiv/Datei an.
+
+READ <Datei>                  Gibt die angegebene Datei als Text aus.
+oder (GET/TYPE/CAT/RTEXT)     !!! Mit diesem Befehl koennen keine !!!
+                              !!!  Binaer-Dateien gelesen werden  !!!
+
+7GET <Datei> <Teile>          Gibt die Datei als 7Plus-File aus.
+
+7MAIL <Datei> <Teile>         Kopiert die Datei als 7Plus-Mail ins Userpostfach
+
+7COR <Datei.err>              Erstellt eine *.cor-Datei auf die Datei.err
+
+BGET/BIN/RPRG <Datei>         Gibt die angegebene Datei im AutoBIN-Modus aus.
+
+BMAIL <Datei>                 Kopiert die Datei als AutoBIN-Mail ins Userpostfach
+
+BSGET <Datei> <Teile>         Gibt die Datei in Binaer-Teilstuecken aus.
+
+YGET/RYAPP <Datei>            Gibt die angegebene Datei im YAPP-Modus aus.
+
+DGET <Datei>                  Gibt die angegebene Datei im DIDADIT-Modus aus.
+
+PUT/WTEXT <Datei>             Schreibt die angegebene Text-Datei.
+
+BPUT/WPRG <Datei>             Schreibt die angegebene Datei im AutoBIN-Modus.
+
+YPUT/WYAPP <Datei>            Schreibt die angegebene Datei im YAPP-Modus.
+
+DPUT <Datei>                  Schreibt die angegebene Datei im DIDADIT-Modus.
+
+HELP/?                        Gibt diesen Hilfetext aus.
+
+QUIT/BYE/EXIT                 Beendet den Filesurf-Modus und kehrt wieder
+                              zum Mailbox-Prompt zurueck.

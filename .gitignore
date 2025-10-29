@@ -17,4 +17,5 @@ bcm32.rc
 Debug/*
 Release/*
 out-*/*
+src/.ccls-cache
 

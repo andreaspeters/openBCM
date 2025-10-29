@@ -1,0 +1,17 @@
+Sysop-Befehle
+=============
+
+MKDIR oder MD <Verzeichnis>   Legt das angegebene Verzeichnis an.
+
+RMDIR oder RD <Verzeichnis>   Loescht das angegebene (leere) Verzeichnis.
+
+RM/DEL <Datei>                Loescht die angegebene Datei.
+
+CP/COPY <Datei1> <Datei2>     Kopiert eine Datei.
+
+MV/MOVE <Datei1> <Datei2>     Kopiert eine Datei und loescht die alte Datei.
+
+FSE <Datei>                   Beschreibung und CALL fuer <Datei> eingeben.
+
+SYS7MAIL <Datei>              7Mail ohne Begrenzung
+

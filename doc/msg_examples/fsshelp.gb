@@ -1,0 +1,22 @@
+
+                                 Sysop-commands
+                                ================
+
+MKDIR <directory>           Creates the given directory.
+or MD
+
+RMDIR <directory>           Erases the given (empty) directory.
+or RD
+
+RM <file>                   Erases the given file.
+or DEL
+
+CP <file> <new file>        Copies a file.
+or COPY
+
+MV <file> <new file>        Copies a file and erases the original file
+or MOVE                     afterwards.
+
+FSE <file>                  Make discription and CALL of <file>.
+
+FSE <file>                  Erase discription and CALL of <file>.

@@ -1,0 +1,78 @@
+FileSurf-Help
+=============
+
+CD [directory]                Changes the working-directory to the given path.
+or CHDIR                      If no parameter is given, you are told about
+                              the current working directory.
+
+XDIR                          Shows the files of the current path. Also CALL and
+                              a short discription of the files is shown.
+
+DIR [options] [directory]     Shows the files of the given path. If no
+                              parameter is given, the files of the current
+                              directory are listed.
+                              Possible options:
+                              -D: sort by file-modification-time
+                              -S: sort by file-size
+                              -N: do not sort (this means the files will be
+                                  listed in order of their creation)
+
+LS [options] [directory]      Does the same as DIR does, except that the
+                              directory-content is given in short format.
+                              By stating the -L option, the long format is
+                              used anyway
+
+PATH                          Lists the directories, from which users may
+                              read and to which users may write.
+
+NEW <name>                    Lists all new files. Reduce output with "name"
+                              search string.
+
+FIND <name>                   Searches "name" in all filesurf filenames.
+
+INFO <file>                   Shows some information above file.
+
+VIEW <file>                   Lists the file-archiv.
+
+GET <file>                    Sends the given file in plain-text mode.
+or READ
+or TYPE                       !!! You cannot read a binary file !!!
+or CAT                        !!!      using this command       !!!
+or RTEXT
+
+7GET <file>                   Sends the given file in 7Plus mode.
+
+7MAIL <file> <parts>          Sends the given File as 7Plus message into
+                              mailbox.
+
+BGET <file>                   Sends the given file in AutoBIN mode.
+or BIN
+or RPRG
+
+BMAIL <file>                  Sends the given file as AutoBIN message into 
+                              user board.
+                              
+BSGET <file> <parts>          Sends the given file in binary parts.
+
+DGET <file>                   Sends the given file in DIDADIT mode.
+
+YGET <file>                   Sends the given file in YAPP mode.
+or RYAPP
+
+PUT <file>                    Saves the given file in plain-text mode.
+or WTEXT
+
+BPUT <file>                   Saves the given file in AutoBIN mode.
+or WPRG
+
+DPUT                          Save a file in DIDADIT mode.
+
+YPUT <file>                   Saves the given file in YAPP mode.
+or WYAPP
+
+HELP                          Sends this text.
+or ?
+
+QUIT                          Terminates the FileSurf mode and returns
+or BYE                        to the mailbox prompt.
+or EXIT

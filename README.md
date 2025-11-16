@@ -20,7 +20,8 @@ make
 
 ## Important
 
-- With OpenBCM 1.9 I will updated the User DB. Please create a Backup of you current
+- With this fork I will change the versioning to semver.
+- With OpenBCM 1.9.0 I will updated the User DB. Please create a Backup of you current
 OpenBCM installation.
 - This fork supports only Linux
 - I've removed weatherstation supports. Since it's already very old.

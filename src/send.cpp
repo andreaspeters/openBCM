@@ -1824,15 +1824,15 @@ void rejectlistedit (char * befbuf)
                 {
                   char buf[LINELEN+1];
                   sprintf(buf, "%c", rej_line.action);
-                  if (rej & 1) sprintf(buf + strlen(buf),
+                  if (rej & 1) snprintf(buf + strlen(buf), sizeof(rej_line.sender),
                                        " <%s", rej_line.sender);
-                  if (rej & 2) sprintf(buf + strlen(buf),
+                  if (rej & 2) snprintf(buf + strlen(buf), sizeof(rej_line.destin),
                                        " >%s", rej_line.destin);
-                  if (rej & 4) sprintf(buf + strlen(buf),
+                  if (rej & 4) snprintf(buf + strlen(buf), sizeof(rej_line.bid),
                                        " $%s", rej_line.bid);
-                  if (rej & 8) sprintf(buf + strlen(buf),
+                  if (rej & 8) snprintf(buf + strlen(buf) + 1, sizeof(rej_line.at),
                                        " @%s", rej_line.at);
-                  if (rej & 16) sprintf(buf + strlen(buf),
+                  if (rej & 16) snprintf(buf + strlen(buf), sizeof(rej_line.type),
                                         " .%c", rej_line.type);
                   putf("Comment: ");
                   getline(p, LINELEN, 1);
@@ -1840,7 +1840,7 @@ void rejectlistedit (char * befbuf)
                   {
                     putf("\nAdding %s ;%s to %s\n", buf, p, REJECTNAME);
                     fputs(buf, f);
-                    sprintf(buf, " ;%s\n", p);
+                    snprintf(buf, sizeof(p), " ;%s\n", p);
                     fputs(buf, f);
                   }
                   else putf("No reject without reason!\n");
@@ -3381,7 +3381,7 @@ char *create_bin_header (char *file)
     fseek(inputfile, 0L, SEEK_END);
     unsigned long binsize = ftell(inputfile);
     rewind(inputfile);
-    sprintf(bin_line, "#BIN#%05lu#|%05u#$%08lX#%s\n", binsize,
+    snprintf(bin_line, LINELEN+1, "#BIN#%05lu#|%05u#$%08lX#%s\n", binsize,
             my_crc.result, getdostime(file_isreg(file)), attachname);
     s_fclose(inputfile);
     return bin_line;

@@ -21,15 +21,15 @@ LD_OPT = -dynamic $(LFLAGS)
 LD_OPT += -lcrypt
 OPT = -fno-delete-null-pointer-checks -funsigned-char -DGITVERSION=\"$(GIT_VERSION)\" $(ARCHSPEC) -std=gnu++98
 
-OPT_WARN = -Wcomment -Wno-conversion -Wformat -Wno-unused \
-	   -Wreturn-type -Wno-write-strings -Wuninitialized -Wswitch -Wshadow
+OPT_WARN = -Wcomment -Wno-conversion -Wformat -Wno-unused -Wno-literal-suffix \
+	   -Wreturn-type -Wno-write-strings -Wuninitialized -Wswitch -Wshadow  -Wno-format-truncation
 
-override OPT = -fno-delete-null-pointer-checks -funsigned-char -DGITVERSION=\"$(GIT_VERSION)\" $(ARCHSPEC)
-override OPT_WARN = -Wcomment -Wno-conversion -Wformat -Wno-unused -Wreturn-type -Wno-write-strings 
+override OPT = -fno-delete-null-pointer-checks -funsigned-char -DGITVERSION=\"$(GIT_VERSION)\" $(ARCHSPEC) -Wno-literal-suffix
+override OPT_WARN = -Wcomment -Wno-conversion -Wformat -Wno-unused -Wreturn-type -Wno-write-strings -Wno-format-truncation
 
 	   
 # enable following line to see all warnings
-#OPT_WARN += -Wall  
+#OPT_WARN += -Wall
 
 .SUFFIXES: .cpp .o
 

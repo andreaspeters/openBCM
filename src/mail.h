@@ -95,9 +95,9 @@
 #undef  VNUMMER
 #define VNUMMER         GITVERSION
 #define STD_BOXHEADER   "OpenBCM"
-#define LOGINSIGN       STD_BOXHEADER" V"VNUMMER" ("OPSYSTEM")"
-#define AUTHOR_ID	      "(c) GNU GPL 1992-"YEAR" F. Radlherr, DL8MBT et al.\n" \
-                          "OpenBCM is maintained by Andreas Peters, DC6AP\n"
+#define LOGINSIGN       STD_BOXHEADER " V" VNUMMER " (" OPSYSTEM ")"
+#define AUTHOR_ID	      "(c) GNU GPL 1992-" YEAR " F. Radlherr, DL8MBT et al.\n" \
+                         "OpenBCM is maintained by Andreas Peters, DC6AP\n"
 
 #define CBMODEID        "(CB)"
 #define CBSUPPORT       "Support by DBX349/DGR349\n"

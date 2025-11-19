@@ -65,14 +65,14 @@ private:
   unsigned int  read_char1 ();
   int           wri_char (int chr);
   void          InitTree ();
-  void          InsertNode (register int r);
+  void          InsertNode ( int r);
   void          link (int n, int p, int q);
   void          linknode (int p, int q, int r);
-  void          DeleteNode (register int p);
+  void          DeleteNode ( int p);
   int           GetBit ();
   int           GetByte ();
-  int           GetNBits (register unsigned int n);
-  int           Putcode (register int l, register unsigned int c);
+  int           GetNBits ( unsigned int n);
+  int           Putcode ( int l,  unsigned int c);
   void          StartHuff ();
   void          reconst ();
   void          update (unsigned c);

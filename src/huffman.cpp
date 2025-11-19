@@ -144,25 +144,25 @@ void huffcod::InitTree ()
 //
 //*************************************************************************
 {
-  register int *p, *e;
+   int *p, *e;
   for (p = rson + N2K + 1, e = rson + N4K + N4K; p <= e;) *p++ = NILHUF;
   for (p = dad, e = dad + N4K; p < e;) *p++ = NILHUF;
 }
 
 /*---------------------------------------------------------------------------*/
 
-void huffcod::InsertNode (register int r)
+void huffcod::InsertNode ( int r)
 //*************************************************************************
 //
 // Insert to node
 //
 //*************************************************************************
 {
-  register int p;
+   int p;
   int cmp;
-  register char *key;
-  register unsigned int c;
-  register unsigned int i, j;
+   char *key;
+   unsigned int c;
+   unsigned int i, j;
 
   cmp = 1;
   key = &text_buf[r];
@@ -248,7 +248,7 @@ void huffcod::link (int n, int p, int q)
 //
 //*************************************************************************
 {
-  register char *s1, *s2, *s3;
+   char *s1, *s2, *s3;
 
   if (p >= NILHUF)
   {
@@ -284,12 +284,12 @@ void huffcod::linknode (int p, int q, int r)
 
 /*---------------------------------------------------------------------------*/
 
-void huffcod::DeleteNode (register int p)
+void huffcod::DeleteNode ( int p)
 //*************************************************************************
 //
 //*************************************************************************
 {
-  register int q;
+   int q;
 
   if (dad[p] == NILHUF) return; // has no linked
   if (rson[p] == NILHUF)
@@ -338,8 +338,8 @@ int huffcod::GetBit ()
 //
 //*************************************************************************
 {
-  register unsigned int dx = getbuf;
-  register unsigned int c;
+   unsigned int dx = getbuf;
+   unsigned int c;
 
   if (getlen <= 8)
   {
@@ -362,8 +362,8 @@ int huffcod::GetByte ()
 //
 //*************************************************************************
 {
-  register unsigned int dx = getbuf;
-  register unsigned c;
+   unsigned int dx = getbuf;
+   unsigned c;
 
   if (getlen <= 8)
   {
@@ -378,7 +378,7 @@ int huffcod::GetByte ()
 
 /*---------------------------------------------------------------------------*/
 
-int huffcod::GetNBits (register unsigned int n)
+int huffcod::GetNBits ( unsigned int n)
 //*************************************************************************
 //
 // get N bit
@@ -386,8 +386,8 @@ int huffcod::GetNBits (register unsigned int n)
 //
 //*************************************************************************
 {
-  register unsigned int dx = getbuf;
-  register unsigned int c;
+   unsigned int dx = getbuf;
+   unsigned int c;
 
   static int mask[17] =
   {
@@ -416,15 +416,15 @@ int huffcod::GetNBits (register unsigned int n)
 
 /*---------------------------------------------------------------------------*/
 
-int huffcod::Putcode (register int l, register unsigned int c)
+int huffcod::Putcode ( int l,  unsigned int c)
 //*************************************************************************
 //
 // Output C bits
 //
 //*************************************************************************
 {
-  register int len = putlen;
-  register unsigned int pb = putbuf;
+   int len = putlen;
+   unsigned int pb = putbuf;
 
   pb |= c >> len;
   if ((len += l) >= 8)
@@ -457,7 +457,7 @@ void huffcod::StartHuff ()
 //
 //*************************************************************************
 {
-  register unsigned int i, j;
+   unsigned int i, j;
 
   for (i = 0; i < N_CHAR; i++)
   {
@@ -488,8 +488,8 @@ void huffcod::reconst ()
 //
 //*************************************************************************
 {
-  register int i, j, k;
-  register unsigned f;
+   int i, j, k;
+   unsigned f;
 
   // correct leaf node into of first half,
   // and set these frequency to (freq+1)/2
@@ -509,12 +509,12 @@ void huffcod::reconst ()
     for (k = j - 1; f < freq[k]; k--);
     k++;
     {
-      register unsigned *p, *e;
+       unsigned *p, *e;
       for (p = &freq[j], e = &freq[k]; p > e; p--) p[0] = p[-1];
       freq[k] = f;
     }
     {
-      register int *p, *e;
+       int *p, *e;
       for (p = &son[j], e = &son[k]; p > e; p--) p[0] = p[-1];
       son[k] = i;
     }
@@ -536,8 +536,8 @@ void huffcod::update (unsigned c)
 //
 //*************************************************************************
 {
-  register unsigned *p, k;
-  register int i, j, l;
+   unsigned *p, k;
+   int i, j, l;
 
   if (freq[R] == MAX_FREQ) reconst();
   c = prnt[c + T];
@@ -574,9 +574,9 @@ unsigned int huffcod::EncodeChar (unsigned c)
 //
 //*************************************************************************
 {
-  register int *p;
-  register unsigned long i;
-  register int j, k;
+   int *p;
+   unsigned long i;
+   int j, k;
 
   i = 0;
   j = 0;
@@ -643,7 +643,7 @@ int huffcod::DecodeChar ()
 //
 //*************************************************************************
 {
-  register unsigned c;
+   unsigned c;
 
   c = son[R];
   // trace from root to leaf,
@@ -685,7 +685,7 @@ unsigned int huffcod::Encode ()
 //
 //*************************************************************************
 {
-  register int i, c, r, s, last_match_length;
+   int i, c, r, s, last_match_length;
   unsigned len;
 
   textsize = 0;
@@ -747,8 +747,8 @@ int huffcod::Decode (unsigned long int txtsize)
 //
 //*************************************************************************
 {
-  register unsigned int i, j, k, r, c;
-  register unsigned long int count;
+   unsigned int i, j, k, r, c;
+   unsigned long int count;
 
   StartHuff();
   r = N4K - F_;

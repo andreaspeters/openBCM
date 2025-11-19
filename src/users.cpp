@@ -944,7 +944,7 @@ static void near userhashfile_newformat (void)
       && (file_isreg(USERHASHNAME_OLD) > 0))
   {
     user_t *us = (user_t*) t_malloc(sizeof(user_t), "usnf");
-    trace(replog, "user", "converting format "USERHASHNAME_OLD"->"USERHASHNAME);
+    trace(replog, "user", "converting format " USERHASHNAME_OLD "->" USERHASHNAME);
     fi = s_fopen(USERHASHNAME_OLD, "srb");
     fo = s_fopen(UHTMP, "swb");
     if (fo) s_fsetopt(fo,1);

@@ -634,7 +634,7 @@ int sysbef (char *befbuf)
     case tgrep:
     {
       char string[61];
-      char name[40];
+      char name[61];
       scanoptions(befbuf);
       if (b->optminus & o_i) b->optplus |= o_i;
       //wenn nicht explizit "-i-", ist "-i" default
@@ -652,7 +652,7 @@ int sysbef (char *befbuf)
       }
       else
       {
-        sprintf(name, TRACEPATH "/t_%s.bcm", string);
+        snprintf(name, sizeof(string), TRACEPATH "/t_%s.bcm", string);
         putlog(name, "");
       }
     } break;
@@ -1164,7 +1164,8 @@ int sysbef (char *befbuf)
       if (*befbuf) fwd_export(befbuf);
     } break;
 #endif
-    case ymbtest:
+
+    case ymbtest:
     {
 #ifdef _USERCOMP
       if (u->comp == 1)

@@ -199,7 +199,7 @@ int smtp::send_msg (void)
   lastfunc("smtp_send_msg");
   char login[32];
   char *s;
-  char my_tmpname[40];
+  char my_tmpname[255];
   int i;
   int j = 0;
   int a = 0;
@@ -209,7 +209,8 @@ int smtp::send_msg (void)
 
   attachments = smtp_convert(tmpname);
   io_t tty = t->output;
-#ifdef INETMAILGATE
+
+#ifdef INETMAILGATE
   if (isinternetmail)
   {
     s = m.internetmailgate;
@@ -217,7 +218,8 @@ int smtp::send_msg (void)
   else
   {
     s = extract_call(msg.from, 1);
-  }
+
+  }
 #else
   s = extract_call(msg.from, 1);
 #endif
@@ -260,9 +262,9 @@ int smtp::send_msg (void)
         if (attachments >= 0)
         {
 #ifdef __LINUX__
-          sprintf(my_tmpname, "%s/imp_%d.imp", work_pfad, a);
+          snprintf(my_tmpname, sizeof(work_pfad), "%s/imp_%d.imp", work_pfad, a);
 #else
-          sprintf(my_tmpname, "%s\\imp_%d.imp", work_pfad, a);
+          snprintf(my_tmpname, sizeof(work_pfad), "%s\\imp_%d.imp", work_pfad, a);
 #endif
           sysimport(my_tmpname);
           if (attachments == 1) a = attachments + 1; //Ausstieg
@@ -282,7 +284,7 @@ int smtp::send_msg (void)
   while (attachments >= 0)
   {
 #ifdef __LINUX__
-    sprintf(my_tmpname, "%s/imp_%d.imp", work_pfad, attachments);
+    snprintf(my_tmpname, sizeof(work_pfad), "%s/imp_%d.imp", work_pfad, attachments);
 #else
     sprintf(my_tmpname, "%s\\imp_%d.imp", work_pfad, attachments);
 #endif

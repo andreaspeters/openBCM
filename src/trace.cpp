@@ -310,9 +310,11 @@ void trace (unsigned int mode, int line, char *file, char *programm, char *strin
   char msm[] = " ";
 
   va_start(argpoint, string);
-  vsprintf(cbuf, string, argpoint);
+  vsnprintf(cbuf, sizeof(cbuf), string, argpoint);
   va_end(argpoint);
+
   if (init_off) return;
+
   if (strlen(cbuf) > 149)
   {
     tracelog("trace overflow", _s_serious);
@@ -329,7 +331,11 @@ void trace (unsigned int mode, int line, char *file, char *programm, char *strin
     case _s_fatal:   strcpy(msm, "F"); break;
     case _s_tr_abbruch: strcpy(msm, "A"); break;
   }
-  sprintf(cbuf + TLEN, "#%s %s: %s", msm, programm, cbuf);
+  char original[256];
+  strncpy(original, cbuf, sizeof(original));
+  original[255] = 0;
+
+  snprintf(cbuf + TLEN, sizeof(cbuf) + TLEN, "#%s %s: %s", msm, programm, original);
   tracelog(cbuf + TLEN, mode);
   strcpy(lasttrace, cbuf + TLEN);  // capture the last trace message
   if (runterfahren) return;

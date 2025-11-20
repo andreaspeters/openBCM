@@ -92,7 +92,7 @@ int finddir (char *path, int one_letter_boards)
   if ((strlen(cmp) == 1) && ! one_letter_boards && ! b->forwarding) return 0;
   if (mbcallok(path))
   {
-    sprintf(b->boardpath, "%s/%s", m.userpath, path);
+    snprintf(b->boardpath, sizeof(m.userpath) + sizeof(path) + 1, "%s/%s", m.userpath, path);
     strlwr(b->boardpath);
     if (! filetime(b->boardpath)) ret = (-1);
     strcpy(b->boardname, path);
@@ -426,13 +426,13 @@ static char near dir_users (char *bake)
   }
   i = 0;
   n = 0;
-  sprintf(b->mask, "%s/*.*", m.userpath);
+  snprintf(b->mask, sizeof(m.userpath) + 4, "%s/*.*", m.userpath);
   userlist = dirsort(m.userpath, 1);
   if (userlist)
   {
     for (i = 0; userlist[i * 8]; i++)
     {
-      sprintf(b->listpath, "%s/%s/" DIRLISTNAME, m.userpath, userlist+i*8);
+      snprintf(b->listpath, sizeof(DIRLISTNAME) + sizeof(m.userpath) + sizeof(userlist) + 2, "%s/%s/" DIRLISTNAME, m.userpath, userlist+i*8);
       strlwr(b->listpath);
       if ((fh = s_open(b->listpath, "srb")) != EOF)
       {
@@ -998,12 +998,12 @@ static void near dir_einboard (char *selektor,
       strcpy(callmybbs, b->boardname);
     else
       if (get_mybbs(b->boardname, mybbs, 0))
-        sprintf(callmybbs, "%s @ %s", b->boardname, mybbs);
+        snprintf(callmybbs, sizeof(b->boardname) + sizeof(mybbs) + 3, "%s @ %s", b->boardname, mybbs);
       else
         if (*mybbs)
-          sprintf(callmybbs, "%s ? %s", b->boardname, mybbs);
+          snprintf(callmybbs, sizeof(b->boardname) + sizeof(mybbs) + 3, "%s ? %s", b->boardname, mybbs);
         else
-          sprintf(callmybbs, "%s @ ???", b->boardname);
+          snprintf(callmybbs, sizeof(b->boardname) + 6, "%s @ ???", b->boardname);
     if (oldmail)
       putf(ms(m_nounread), callmybbs);
     else

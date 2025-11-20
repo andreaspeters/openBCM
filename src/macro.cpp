@@ -759,7 +759,7 @@ static int mk_parse_error (void)
   strcpy(line, "");
   if (script->error)
   {
-    sprintf(script->ermessage, "%s, word '%s'", script->error, script->word);
+    snprintf(script->ermessage, sizeof(script->error) + sizeof(script->word) + 10, "%s, word '%s'", script->error, script->word);
     script->erline = script->line;
     if (*script->linebegin != LF)
     {

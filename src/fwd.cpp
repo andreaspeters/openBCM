@@ -2214,7 +2214,7 @@ char getfwdlistentry (char *call, char type, char num, char **lines)
   }
   else // type 'l' or 'c'
   {
-    sprintf(b->listpath, "%s/%s/" DIRLISTNAME, m.userpath, call);
+    snprintf(b->listpath, sizeof(DIRLISTNAME) + sizeof(m.userpath) + sizeof(call) + 2, "%s/%s/" DIRLISTNAME, m.userpath, call);
     strlwr(b->listpath);
     if ((fh = s_open(b->listpath, "srb")) != EOF)
     {
@@ -2752,7 +2752,7 @@ void fwdsend (char *call)
   char buf[132];
   char hilfsbuf[132];
   char mycall[20];
-  char rauscall[15];
+  char rauscall[20];
   char connpfad[FSPATHLEN];
   char *cc;
   time_t sidt;
@@ -2830,7 +2830,7 @@ void fwdsend (char *call)
   strcpy(mycall, m.mycall[0]);
   subst1(mycall, '-', 0);
   if (ff->ssid)
-    sprintf(rauscall, "%s-%u", mycall, ff->ssid);
+    snprintf(rauscall, sizeof(mycall) + sizeof(ff->ssid) + 1, "%s-%u", mycall, ff->ssid);
   else
     strcpy(rauscall, mycall);
   if (ff->ssid == m.fwdssid) // change SSID in relation to last connect

@@ -725,8 +725,8 @@ int setlinuxpasswd (char *calltmp, char *passwort)
     if (uid > Maxuid) return 0;
 
   // Add user to passwd file(s)
-  sprintf(homedirparent, "%s/%.3s...", Homedir, call);
-  sprintf(homedir, "%s/%s", homedirparent, call);
+  snprintf(homedirparent, sizeof(Homedir) + sizeof(call) + 4, "%s/%.3s...", Homedir, call);
+  snprintf(homedir, sizeof(homedirparent) + sizeof(call) + 1, "%s/%s", homedirparent, call);
   if (   *SPASSWDFILE
       && ! stat(SPASSWDFILE, &statbuf)
       && (fp = s_fopen(SPASSWDFILE, "sab")))

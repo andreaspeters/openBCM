@@ -175,7 +175,7 @@ void beftest (char *befbuf)
     } break;
     case l2ct:
     {
-      sprintf(wl->val.l2ctext, "%.79s\r", befbuf);
+      snprintf(wl->val.l2ctext, sizeof(befbuf) + 1, "%.79s\r", befbuf);
     } break;
     case xmhlen:
     {

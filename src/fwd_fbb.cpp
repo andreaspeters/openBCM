@@ -1214,8 +1214,8 @@ char fbb::rx_yapp_data (char *buf, // Buffer for data-block
   {
   case STX: break;
   case EOT: return (2);
-  default: fwdput("*** rcvd invalid block-id: %d", i);
-           //return (0);
+  default: fwdput("*** rcvd invalid block-id: %s", &c);
+    return (0);
   }
   if (! (length = getv())) length = 256;
   waitfor(e_ticsfull);

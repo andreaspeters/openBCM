@@ -421,19 +421,23 @@ void httpd::get_authorization (char *buf, int cookie)
 {
   char *search;
   char *basic;
-  char loginpw[50];
+
+  char loginpw[50];
   char *locpw;
 
   if (cookie) search = m.boxname;
   else search = "Basic";
   basic = strstr(buf, search);
-  if (basic)
+
+  if (basic)
   {
     basic += strlen(search);
     if (*basic) basic++;
     safe_strcpy(userpass, basic);
-    base64bin(basic, loginpw, 49);
-    locpw = strchr(loginpw, ':');
+
+    base64bin(basic, loginpw, 49);
+
+    locpw = strchr(loginpw, ':');
     if (locpw && locpw[0] && locpw[1])
     {
       if (cookie)
@@ -444,7 +448,8 @@ void httpd::get_authorization (char *buf, int cookie)
     }
     locpw = strchr(loginpw, ' ');
     if (locpw) *locpw = 0;
-    loginpw[NAMELEN] = 0;
+
+    loginpw[NAMELEN] = 0;
     if (cookie)
       strcpy(cookie_login, loginpw);
     else
@@ -460,7 +465,8 @@ void httpd::get_request (void)
 //*************************************************************************
 {
   char locinbuf[301];
-  char *vers;
+
+  char *vers;
 
   getline(locinbuf, sizeof(locinbuf) - 1, 1);
   if ((m.tcpiptrace == 1) || (m.tcpiptrace == 8)) httplog("RX", locinbuf);
@@ -500,7 +506,8 @@ void httpd::get_request (void)
     status = 400;
     return;
   }
-  //determine protocol version
+
+  //determine protocol version
   vers = stristr(locprotocol, "HTTP/");
   if (vers != locprotocol)
   {
@@ -513,7 +520,8 @@ void httpd::get_request (void)
     status = 400;
     return;
   }
-  safe_strcpy(uri, locuri);
+
+  safe_strcpy(uri, locuri);
   if      (! stricmp(locmethod, "GET"))  method = GET;
   else if (! stricmp(locmethod, "HEAD")) method = HEAD;
   else if (! stricmp(locmethod, "POST")) method = POST;
@@ -567,7 +575,8 @@ void httpd::get_request (void)
     safe_strcpy(cookie_pw, "");
   }
 #endif
-  if (httpsurface == 0)
+
+  if (httpsurface == 0)
   {
   //check for valid url - this is really needed only if not using frames
   //when header is generated before cmd parsing
@@ -614,19 +623,24 @@ void httpd::get_request (void)
       if (stristr(locinbuf, "Authorization") == locinbuf)
       {
         get_authorization(locinbuf, 0);
-      }
+
+      }
       if (stristr(locinbuf, "Cookie") == locinbuf)
         get_authorization(locinbuf, 1);
-/*      if (stristr(locinbuf, "Referer") == locinbuf)
+
+/*      if (stristr(locinbuf, "Referer") == locinbuf)
         get_field(locinbuf, referer, sizeof(referer)); */
       if (stristr(locinbuf, "Host") == locinbuf)
         get_field(locinbuf, host, sizeof(host));
-      if (stristr(locinbuf, "Content-length") == locinbuf)
+
+      if (stristr(locinbuf, "Content-length") == locinbuf)
         get_contentlength(locinbuf);
-    }
+
+    }
   }
   while (*locinbuf);
-#ifdef _GUEST
+
+#ifdef _GUEST
   if (m.httpguestfirst || guestlogin)
   {
   //dh8ymb: falls author. fail und "not userlogin" und _guest
@@ -808,7 +822,8 @@ void httpd::put_header (char *title)
 //
 //*************************************************************************
 {
-  struct
+
+  struct
   { int status;
     char *phrase;
   }
@@ -835,7 +850,8 @@ void httpd::put_header (char *title)
   int expsec;
   char *mimestr;
   int ht = b->http;
-  FILE *wavfile = NULL;
+
+  FILE *wavfile = NULL;
   FILE *backfile = NULL;
   b->http = 1;
 
@@ -1395,7 +1411,7 @@ void httpd::start_http (char *name)
 {
   char sign1[80];
   FILE *f;
-  char cmd[200];
+  char cmd[256];
   char *head;
   char to[LINELEN+1];
   char life[LINELEN+1];
@@ -1635,9 +1651,9 @@ void httpd::start_http (char *name)
 #endif
             sysimport(tmpname);
             if (*life)
-              sprintf(cmd, "s %s #%s %s", to, life, subj);
+              snprintf(cmd, sizeof(subj) + sizeof(to) + sizeof(life), "s %s #%s %s", to, life, subj);
             else
-              sprintf(cmd, "s %s %s", to, subj);
+              snprintf(cmd, sizeof(subj) + sizeof(to), "s %s %s", to, subj);
             mailbef(cmd, 0);
 #ifdef DEBUG_HTTP
             trace(report, "httpd", "debug: mail sent %s", to);
@@ -1734,7 +1750,8 @@ void html_putf (char *format, ...)
   int ret = _vsnprintf(cbuf, sizeof(cbuf) - 1, format, argpoint);
 #endif
   va_end(argpoint);
-  if ((m.tcpiptrace == 1) || (m.tcpiptrace == 8)) httplog("TX", s);
+
+  if ((m.tcpiptrace == 1) || (m.tcpiptrace == 8)) httplog("TX", s);
   if (ret == -1)
   {
     s[50] = 0;

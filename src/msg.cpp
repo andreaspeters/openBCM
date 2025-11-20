@@ -574,7 +574,7 @@ char *ms (MSG_TYP msgnum)
 //*************************************************************************
 {
   lastfunc("ms");
-  register int offset;
+  int offset;
   static char ext[4];
   unsigned int i;
   static char tmp1[200];

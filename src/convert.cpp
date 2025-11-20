@@ -224,7 +224,7 @@ void convedit(char *befbuf)
   char cmd[5];
   char board1[9];
   char board2[9];
-  char buf[50];
+  char buf[60];
   short int lifetime;
   char subject[32];
 
@@ -291,13 +291,13 @@ void convedit(char *befbuf)
                 if (lifetime > 0)
                 {
                  if (subject[0])
-                   sprintf(buf, "%s %s %d %s\n", board1, board2,
+                   snprintf(buf, sizeof(board1) + sizeof(board2) + sizeof(lifetime) + sizeof(subject) + 4, "%s %s %d %s\n", board1, board2,
                                                  lifetime, subject);
                  else
-                   sprintf(buf, "%s %s %d\n", board1, board2, lifetime);
+                   snprintf(buf, sizeof(board1) + sizeof(board2) + sizeof(lifetime) + 3, "%s %s %d\n", board1, board2, lifetime);
                 }
                 else
-                  sprintf(buf, "%s %s\n", board1, board2);
+                  snprintf(buf, sizeof(board1) + sizeof(board2) + 2, "%s %s\n", board1, board2);
                 strlwr(buf);
                 fputs(buf, f);
               }

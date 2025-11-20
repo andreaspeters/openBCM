@@ -203,7 +203,7 @@ int scan_userfile (char *call, int query)
     if (query) return 0;
     else return fwdput_no_files;
   }
-  sprintf(b->listpath, "%s/%s/" DIRLISTNAME, m.userpath, call);
+  snprintf(b->listpath, sizeof(m.userpath) + sizeof(call) + sizeof(DIRLISTNAME), "%s/%s/" DIRLISTNAME, m.userpath, call);
   strlwr(b->listpath);
   if ((fh = s_open(b->listpath, "srb")) != EOF)
   {

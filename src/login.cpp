@@ -145,7 +145,7 @@ int readtext (char *text)
         prozent = 0;
       }
       else if (a == '%') prozent = 1;
-           else sprintf(buf2, "%s%c", buf2, a);
+           else snprintf(buf2, sizeof(buf2) + 1, "%s%c", buf2, a);
       if (last == LF)
       {
         if (b->http > 0) rm_esc(buf2);

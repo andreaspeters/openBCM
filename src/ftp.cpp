@@ -824,7 +824,7 @@ bool ftpd::chpath (char *path, char *add_path)
   else
     strcat(tmppath, add_path);
   processpath(tmppath);
-  sprintf(stat_path, "%s%s", intropath, tmppath);
+  snprintf(stat_path, sizeof(intropath) + sizeof(tmppath), "%s%s", intropath, tmppath);
   processpath(stat_path);
   if ((dir = opendir(stat_path)) != NULL)
   {

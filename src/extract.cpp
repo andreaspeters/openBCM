@@ -142,7 +142,7 @@ void extract (unsigned msgnr)
     if ((strstr(s, " go_text. ") == s) || (strstr(s, " go_info. ") == s))
     {
       sscanf(s + 10, "%s", st); // Text-Datei-Namen lesen
-      sprintf(name, TEMPPATH "/%s", st);
+      snprintf(name, sizeof(TEMPPATH) + sizeof(st) + 1, TEMPPATH "/%s", st);
       strlwr(name);
       if (! access(name, 0)) // Wenn vorhanden, Extension hochzaehlen
       {
@@ -187,9 +187,9 @@ void extract (unsigned msgnr)
       {
         subst1(name, '.', 0); // Extension abtrennen
         if (r == 1)
-          sprintf(st, TEMPPATH "/%s.7pl", name); // Einteilig: Endung .7PL
+          snprintf(st, sizeof(TEMPPATH) + sizeof(name) + 5, TEMPPATH "/%s.7pl", name); // Einteilig: Endung .7PL
         else
-          sprintf(st, TEMPPATH "/%s.p%02x", name, w); // Mehrteilig: End. .PXX
+          snprintf(st, sizeof(TEMPPATH) + sizeof(name) +sizeof(w) + 4, TEMPPATH "/%s.p%02x", name, w); // Mehrteilig: End. .PXX
       }
     }
     else

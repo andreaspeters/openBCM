@@ -112,7 +112,7 @@ German v1.07.01
 "[33mUser-Read[0m....(A UR).%s\n"
 "[33mCheck-Opt[0m......(A CH).%-19s"
 "Keine HELP-Datei gefunden.\n"
-"[33mName[0m..........(A N).%s\n"
+"[33mName[0m.........(A N).%s\n"
 "[33mLetztes D N[0m..(Check).%s\n"
 "[33mLetztes QUIT[0m.........%s\n"
 "[33mLetzter Login[0m........%s"

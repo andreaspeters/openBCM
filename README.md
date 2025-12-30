@@ -26,6 +26,47 @@ OpenBCM installation.
 - This fork supports only Linux
 - I've removed weatherstation supports. Since it's already very old.
 
+## How to install bcm
+
+First, create in your homedirectory a directory for bcm.
+
+```bash
+mkdir bcm
+```
+
+Then download the bcm binary, move it into the bcm directory and execute it.
+
+```bash
+cd bcm
+chmod +x bcm
+./bcm
+```
+After the first execute, bcm will create some files and directories.
+
+Next, download the `style.css` file from this repository and copy it into the
+http directory.
+
+```bash
+cd http
+wget https://github.com/andreaspeters/openBCM/raw/refs/heads/master/doc/http/style.css
+```
+
+Start to configure `init.bcm`.
+
+## How to update bcm
+
+I assume that you are already using bcm version 1.8.11-2 from this repository.
+
+First, create a backup of your whole bbs.
+Next, download the newest bcm binary and copy it into your current bcm
+directory.
+
+Very important, copy all the language file from `doc/msg` and the `style.css`
+from `doc/http` into your bcm directory.
+
+That's it.
+
+
 ## How to use ANSI Color
 
 In the `msg` directory you will find language files like `ctext.<LANGUAGE_CODE>`. 

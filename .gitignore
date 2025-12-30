@@ -18,4 +18,4 @@ Debug/*
 Release/*
 out-*/*
 src/.ccls-cache
-
+test

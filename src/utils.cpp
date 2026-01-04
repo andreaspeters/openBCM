@@ -1099,14 +1099,14 @@ char *time2filename (time_t unixtime)
     else nextfile++;
   }
   tt = ad_comtime(unixtime); // UTC
-  name[0] = deznib(tt->tm_year - 90);
-  name[1] = deznib(tt->tm_mon + 1);
-  name[2] = deznib(tt->tm_mday);
-  name[3] = deznib(tt->tm_hour);
-  name[4] = deznib(tt->tm_min >> 1);
-  name[5] = deznib((tt->tm_min & 1) * 15 + (tt->tm_sec >> 2));
-  name[6] = deznib(nextfile);
-  name[7] = 0;
+  name[0] = deznib(((tt->tm_year - 90) / 36) % 36);
+  name[1] = deznib((tt->tm_year - 90) % 36);
+  name[2] = deznib(tt->tm_mon + 1);
+  name[3] = deznib(tt->tm_mday);
+  name[4] = deznib(tt->tm_hour);
+  name[5] = deznib(tt->tm_min >> 1);
+  name[6] = deznib((tt->tm_min & 1) * 15 + (tt->tm_sec >> 2));
+  name[7] = deznib(nextfile);
   return (char *) name;
 }
 
@@ -1122,6 +1122,7 @@ time_t filename2time (char *name)
 {
   struct tm tt;
   byte s[9];
+  int pos, y;
 
   memset(&tt, 0, sizeof(struct tm));
   if (strlen(name) > 8 || *name == ' ')
@@ -1131,14 +1132,37 @@ time_t filename2time (char *name)
   }
   strcpy((char *) s, name);
   strupr((char *) s);
-  tt.tm_sec  = nibdez(s[6]); // laufende Nummer als Sekunde interpretieren
-  tt.tm_min  = nibdez(s[5]) / 15;
-  tt.tm_min += nibdez(s[4]) << 1;
-  tt.tm_hour = nibdez(s[3]);
-  tt.tm_mday = nibdez(s[2]);
-  tt.tm_mon  = nibdez(s[1]) - 1;
-  tt.tm_year = nibdez(s[0]) + 90;
-  tt.tm_isdst = -1; //OE3DZW
+
+  if (strlen(name) = 8 {
+  }
+
+  if (strlen(name) == 7) {
+    // old Format (1990–2025)
+    y = nibdez(s[0]);
+    pos = 1;
+  } else {
+    // new Format (ab 2026)
+    y = nibdez(s[0]) * 36 + nibdez(s[1]);
+    pos = 2;
+  }
+
+  tt.tm_year = y + 90;
+  tt.tm_mon  = nibdez(s[pos++]) - 1;
+  tt.tm_mday = nibdez(s[pos++]);
+  tt.tm_hour = nibdez(s[pos++]);
+  tt.tm_min += nibdez(s[pos++]) << 1;
+  tt.tm_min  = nibdez(s[pos++]) / 15;
+  tt.tm_sec  = nibdez(s[pos++]); // laufende Nummer als Sekunde interpretieren
+  tt.tm_isdst = -1;
+
+//  tt.tm_sec  = nibdez(s[6]); // laufende Nummer als Sekunde interpretieren
+//  tt.tm_min  = nibdez(s[5]) / 15;
+//  tt.tm_min += nibdez(s[4]) << 1;
+//  tt.tm_hour = nibdez(s[3]);
+//  tt.tm_mday = nibdez(s[2]);
+//  tt.tm_mon  = nibdez(s[1]) - 1;
+//  tt.tm_year = nibdez(s[0]) + 90;
+//  tt.tm_isdst = -1; //OE3DZW
   return ad_mktime(&tt); //ANSI time in UTC
 }
 

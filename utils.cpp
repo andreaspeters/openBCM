@@ -1098,7 +1098,7 @@ char *time2filename (time_t unixtime)
     else nextfile++;
   }
   tt = ad_comtime(unixtime); // UTC
-  name[0] = deznib(tt->tm_year - 90);
+  name[0] = deznib((tt->tm_year - 90) % 36);
   name[1] = deznib(tt->tm_mon + 1);
   name[2] = deznib(tt->tm_mday);
   name[3] = deznib(tt->tm_hour);
@@ -1138,6 +1138,15 @@ time_t filename2time (char *name)
   tt.tm_mon  = nibdez(s[1]) - 1;
   tt.tm_year = nibdez(s[0]) + 90;
   tt.tm_isdst = -1; //OE3DZW
+
+  // IMPORTANT: this is a durty fix. The problem is, the date function in bcm is base36.
+  // that means 1990-2025. More worst, that filename can only have the len 7. Thats hardcoded.
+  // I can fix it but thanks to the list.bcm format it will break the compatibility to           
+  // filenames with 7 chars. So... Until I find a good solution, I apply this durty fix, sorry fo
+  if (tt.tm_year == 90) {
+    tt.tm_year += 36;
+  }
+                    //
   return ad_mktime(&tt); //ANSI time in UTC
 }
 

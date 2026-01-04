@@ -410,8 +410,6 @@ int loaduser (char *usercall, user_t *uu, int anlegen)
     }
     else uu->filepos = 0;
   }
-  trace(report, "loaduser", "call: %s ansicolor: %d", usercall, u->ansicolor);
-
   return retwert;
 }
 

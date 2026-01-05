@@ -631,7 +631,7 @@ void mailserv::show_info (char *name, char longformat)
       qsort(userlist, userc + maintc, maxlen,
             (int(*) (const void *, const void *)) strcmp);
       cols = 79 / (maxlen - 1);
-      sprintf(format, "%%-%ds", maxlen - 1);
+      snprintf(format, sizeof(format), "%%-%ds", maxlen - 1);
       if (maintc)
       {
         putf(ms(m_msv_maints), maintc);

@@ -343,7 +343,7 @@ int filesurf::showdir (char *path, bitfeld options)
           (int(*) (const void *, const void *)) sortbyname);
   waitfor(e_ticsfull);
   maxlength += 3;
-  sprintf(smaxlength, "%%-%ds", maxlength);
+  snprintf(smaxlength, sizeof(smaxlength), "%%-%ds", maxlength);
   count = counter;
   for (counter = 0; counter < count; counter++)
   {

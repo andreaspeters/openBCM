@@ -217,52 +217,52 @@ char *datestr (time_t utime, int ymode) //dk2ui
   {
     switch (ymode)
     {
-      case 0: sprintf(datum, "%02d.%02d",
+      case 0: snprintf(datum, sizeof(datum), "%02d.%02d",
                 tt->tm_mday, tt->tm_mon + 1); break;
-      case 1: sprintf(datum, "%02d.%02d.%02d",
+      case 1: snprintf(datum, sizeof(datum), "%02d.%02d.%02d",
                 tt->tm_mday, tt->tm_mon + 1, tt->tm_year % 100); break;
-      case 2: sprintf(datum, "%02d.%02d.%04d",
+      case 2: snprintf(datum, sizeof(datum), "%02d.%02d.%04d",
                 tt->tm_mday, tt->tm_mon + 1, tt->tm_year + Year); break;
-      case 3: sprintf(datum, "%02d:%02d%c",
+      case 3: snprintf(datum, sizeof(datum), "%02d:%02d%c",
                 tt->tm_hour, tt->tm_min, TZ); break;
-      case 4: sprintf(datum, "%02d:%02d:%02d%c",
+      case 4: snprintf(datum, sizeof(datum), "%02d:%02d:%02d%c",
                 tt->tm_hour, tt->tm_min, tt->tm_sec, TZ); break;
-      case 5: sprintf(datum, "%02d%02d%02d/%02d%02d",
+      case 5: snprintf(datum, sizeof(datum), "%02d%02d%02d/%02d%02d",
                 tt->tm_year % 100, tt->tm_mon + 1, tt->tm_mday,
                 tt->tm_hour, tt->tm_min); break;
-      case 6: sprintf(datum, "%04d%02d%02d%02d%02d%02d",
+      case 6: snprintf(datum, sizeof(datum), "%04d%02d%02d%02d%02d%02d",
                 tt->tm_year + Year, tt->tm_mon + 1, tt->tm_mday,
                 tt->tm_hour, tt->tm_min, tt->tm_sec); break;
-      case 7: sprintf(datum, "%02d%02d%02d%02d%02d",
+      case 7: snprintf(datum, sizeof(datum), "%02d%02d%02d%02d%02d",
                 tt->tm_mday, tt->tm_mon + 1, tt->tm_year % 100,
                 tt->tm_hour, tt->tm_min); break;
-      case 8: sprintf(datum, "%02d%02d%02d",
+      case 8: snprintf(datum, sizeof(datum), "%02d%02d%02d",
                 tt->tm_year % 100, tt->tm_mon + 1, tt->tm_mday); break;
-      case 9: sprintf(datum, "%4d%02d%02d",
+      case 9: snprintf(datum, sizeof(datum), "%4d%02d%02d",
                 tt->tm_year + Year, tt->tm_mon + 1, tt->tm_mday); break;
-      case 10: sprintf(datum, "%02d.%02d.%02d %02d:%02d%c",
+      case 10: snprintf(datum, sizeof(datum), "%02d.%02d.%02d %02d:%02d%c",
                 tt->tm_mday, tt->tm_mon + 1, tt->tm_year % 100,
                 tt->tm_hour, tt->tm_min, TZ); break;
-      case 11: sprintf(datum, "%02d.%02d.%02d %02d:%02d:%02d%c",
+      case 11: snprintf(datum, sizeof(datum), "%02d.%02d.%02d %02d:%02d:%02d%c",
                 tt->tm_mday, tt->tm_mon + 1, tt->tm_year % 100,
                 tt->tm_hour, tt->tm_min, tt->tm_sec, TZ); break;
-      case 12: sprintf(datum, "%02d.%02d.%04d %02d:%02d:%02d%c",
+      case 12: snprintf(datum, sizeof(datum), "%02d.%02d.%04d %02d:%02d:%02d%c",
                 tt->tm_mday, tt->tm_mon + 1, tt->tm_year + Year,
                 tt->tm_hour, tt->tm_min, tt->tm_sec, TZ); break;
-      case 13: sprintf(datum, "%s, %d %s %d %02d:%02d:%02d",
+      case 13: snprintf(datum, sizeof(datum), "%s, %d %s %d %02d:%02d:%02d",
                 wd[tt->tm_wday], tt->tm_mday, mn[tt->tm_mon], tt->tm_year + Year,
                 tt->tm_hour, tt->tm_min, tt->tm_sec); break;
-      case 14: sprintf(datum, "%s, %04d-%s-%02d %02d:%02d:%02d%c",
+      case 14: snprintf(datum, sizeof(datum), "%s, %04d-%s-%02d %02d:%02d:%02d%c",
                 wd[tt->tm_wday], tt->tm_year + Year, mn[tt->tm_mon], tt->tm_mday,
                 tt->tm_hour, tt->tm_min, tt->tm_sec, TZ); break;
-      case 15: sprintf(datum, "%04d-%02d-%02d %02d:%02d:%02d%c",
+      case 15: snprintf(datum, sizeof(datum), "%04d-%02d-%02d %02d:%02d:%02d%c",
                 tt->tm_year + Year, tt->tm_mon + 1, tt->tm_mday,
                 tt->tm_hour, tt->tm_min, tt->tm_sec, TZ); break;
-      case 16: sprintf(datum, "%1d%02d%02d",
+      case 16: snprintf(datum, sizeof(datum), "%1d%02d%02d",
                 tt->tm_year % 10, tt->tm_mon + 1, tt->tm_mday); break;
-      case 17: sprintf(datum, "%02d%02d/%02d%02d",
+      case 17: snprintf(datum, sizeof(datum), "%02d%02d/%02d%02d",
                 tt->tm_mon + 1, tt->tm_mday, tt->tm_hour, tt->tm_min); break;
-      case 18: sprintf(datum, "%s, %d-%s-%d %02d:%02d:%02d GMT",
+      case 18: snprintf(datum, sizeof(datum), "%s, %d-%s-%d %02d:%02d:%02d GMT",
                 wd[tt->tm_wday], tt->tm_mday, mn[tt->tm_mon], tt->tm_year + Year,
                 tt->tm_hour, tt->tm_min, tt->tm_sec); break;
       default: *datum = 0;

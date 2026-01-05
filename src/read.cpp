@@ -675,7 +675,7 @@ void marklifetime (int tage)
 
   tage += (unsigned) ((ad_time() - filename2time(b->mailfname)) / DAY);
   if (tage > 999) tage = 999;
-  sprintf(nlt, "%3.3d", tage);
+  snprintf(nlt, sizeof(nlt), "%3.3d", tage);
   strlwr(b->mailpath);
   if ((f = s_fopen(b->mailpath, "sr+t")) != NULL)
   {
@@ -748,7 +748,8 @@ static void change_address (char *zielbuf)
 //*************************************************************************
 {
   char name[20];
-  char found;
+
+  char found;
   FILE *f;
   handle fh;
   char *at, *db = NULL;
@@ -1729,7 +1730,8 @@ int mbchange (char *selektor, int thiscmd, int interactive)
     safe_strcpy(zielbuf, ziel);
   }
   skip (selektor);
-  if ( // ! b->beginn ||
+
+  if ( // ! b->beginn ||
        //dh8ymb: b->beginn nicht abpruefen, sonst geht ein "-2"-Bereich nicht!
        ! b->bereich)
   {
@@ -2029,7 +2031,8 @@ static void http_put_read_cmds (int mode)
     html_putf("</CENTER><BR><HR WIDTH=\"100%%\"><P>\n");
     return;
   }
-  // Reply
+
+  // Reply
   if (toupper(b->betreff[0]) == 'R' &&
       toupper(b->betreff[1]) == 'E' &&
       b->betreff[2] == ':')
@@ -2047,7 +2050,8 @@ static void http_put_read_cmds (int mode)
       sprintf(b->line, "Re: %s", b->betreff);
   sprintf(b->betreff, "%.50s", b->line);
   http_postmsg(b->betreff, post_subj_reply, BETREFFLEN * 2);
-/*
+
+/*
   // Comment
   strcpy(b->betreff, betreff);
   if (toupper(b->betreff[0]) == 'R' &&
@@ -2138,7 +2142,8 @@ int mbread (char *selektor, int mode)
 //
 //*************************************************************************
 {
-  lastfunc("mbread");
+
+  lastfunc("mbread");
   char *line = b->line;
   char oldline[BUFLEN];
   unsigned kopf = 0, wargeloescht = 0;

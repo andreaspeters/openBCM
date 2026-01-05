@@ -27,7 +27,7 @@ char *doszeit (unsigned minuten)
 //*************************************************************************
 {
   static char zeitstr[10];
-  sprintf(zeitstr, " %02u:%02u ", minuten / 60, minuten % 60);
+  snprintf(zeitstr, sizeof(zeitstr), " %02u:%02u ", minuten / 60, minuten % 60);
   return zeitstr;
 }
 

@@ -129,74 +129,23 @@ time_t isdst (void)
 
 /*---------------------------------------------------------------------------*/
 
-time_t ad_timezone (void)
-//****************************************************************************
-//
-// returns offset between utc and local time in seconds
-// ad_timezone() depends of setting the environment variable TZ
-//
-//****************************************************************************
+time_t ad_timezone(void)
 {
-#ifdef __FLAT__
-#ifdef __LINUX__
-  struct tm *tt;
-  time_t ut = loctime(); //bcm local time
-  tt = ad_comtime(ut);
-  return tt->tm_gmtoff;
-#else //_WIN32
-  return (isdst() - _timezone);
-//  _daylight   Nonzero if daylight saving time (DST) zone is specified in TZ;
-//              otherwise, 0. Default value is 1.
-//  _timezone   Difference in seconds between coordinated universal time and
-//              local time. Default value is 28,800 (=8h).
-//  _tzname[0]  Time-zone name derived from TZ environment variable.
-//  _tzname[1]  DST zone name derived from TZ environment variable. Default
-//              value is PDT (Pacific daylight time -8h).
-//              If DST zone is omitted from TZ, _tzname[1] is empty string.
-#endif
-#else //__DOS16__
-  if (m.pcisutc)
-    return (time_t) 0L;
-  else
-    return (isdst() + m.stimeoffset * 3600);
-#endif
+  time_t now = time(NULL);
+
+  struct tm gmt, loc;
+  gmtime_r(&now, &gmt);
+  localtime_r(&now, &loc);
+
+  return mktime(&loc) - mktime(&gmt);
 }
 
 /*---------------------------------------------------------------------------*/
 
-time_t ad_time (void) // dh6bb
-//****************************************************************************
-//
-// make UTC, Referenz for all internal ANSI times of bcm
-// like (loctime() - ad_timezone())
-//
-//****************************************************************************
+time_t ad_time(void)
 {
-  time_t ut = loctime(); //bcm local time
-#ifdef __FLAT__
-#ifdef __LINUX__
-  struct tm *tt;
-  tt = ad_comtime(ut);
-  return (ut - tt->tm_gmtoff);
-#else //_WIN32
-  return (ut - (isdst() - _timezone));
-//  _daylight   Nonzero if daylight saving time (DST) zone is specified in TZ;
-//              otherwise, 0. Default value is 1.
-//  _timezone   Difference in seconds between coordinated universal time and
-//              local time. Default value is 28,800.
-//  _tzname[0]  Time-zone name derived from TZ environment variable.
-//  _tzname[1]  DST zone name derived from TZ environment variable. Default
-//              value is PDT (Pacific daylight time).
-//              If DST zone is omitted from TZ, _tzname[1] is empty string.
-#endif
-#else //__DOS16__
-  if (m.pcisutc)
-    return (ut - ((time_t) 0L));
-  else
-    return (ut - (isdst() + m.stimeoffset * 3600));
-#endif
+  return time(NULL);   // UTC, korrekt, fertig
 }
-
 /*---------------------------------------------------------------------------*/
 
 unsigned ad_minutes (void)

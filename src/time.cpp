@@ -129,23 +129,36 @@ time_t isdst (void)
 
 /*---------------------------------------------------------------------------*/
 
-time_t ad_timezone(void)
+time_t ad_timezone (void)
+//****************************************************************************
+//
+// returns offset between utc and local time in seconds
+// ad_timezone() depends of setting the environment variable TZ
+//
+//****************************************************************************
 {
-  time_t now = time(NULL);
-
-  struct tm gmt, loc;
-  gmtime_r(&now, &gmt);
-  localtime_r(&now, &loc);
-
-  return mktime(&loc) - mktime(&gmt);
+  struct tm *tt;
+  time_t ut = loctime(); //bcm local time
+  tt = ad_comtime(ut);
+  return tt->tm_gmtoff;
 }
 
 /*---------------------------------------------------------------------------*/
 
-time_t ad_time(void)
+time_t ad_time (void) // dh6bb
+//****************************************************************************
+//
+// make UTC, Referenz for all internal ANSI times of bcm
+// like (loctime() - ad_timezone())
+//
+//****************************************************************************
 {
-  return time(NULL);   // UTC, korrekt, fertig
+  time_t ut = loctime(); //bcm local time
+  struct tm *tt;
+  tt = ad_comtime(ut);
+  return (ut - tt->tm_gmtoff);
 }
+
 /*---------------------------------------------------------------------------*/
 
 unsigned ad_minutes (void)

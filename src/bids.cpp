@@ -299,6 +299,7 @@ char *newbid (void)
   FILE *bidhf;     // offenes BID-Hashfile
   char callbuf[7]; // DH3MB
   short unsigned lbid;
+  int y = d->tm_year - 90;
 
   d = ad_comtime(ad_time());
   if (! lastday) lastday = d->tm_mday;
@@ -332,6 +333,11 @@ char *newbid (void)
   while (strlen(callbuf) < 6) strcat(callbuf, "_");
   do {
     lbid = ++k.lastbid;
+
+    if (y >= 36) {
+      y = 0;
+    }
+
 #ifndef _BCMNET_FWD
 // format:
 // <day><month><year><call><num>  <num>.. 0..9,A..Z
@@ -340,7 +346,7 @@ char *newbid (void)
     sprintf(bid, "%c%1X%c%s%c%c%c",
                deznib(d->tm_mday),
                  d->tm_mon + 1,
-                     deznib(d->tm_year - 90), //this is a 2026er bug ;-)
+                     deznib(y),
                        callbuf,
                          deznib((lbid / (36 * 36))),
                            deznib((lbid / 36) % 36),
@@ -351,7 +357,7 @@ char *newbid (void)
 // DYMCCCCCC_23
     sprintf(bid, "%c%c%1X%s_%c%c",
                    deznib(d->tm_mday),
-                     deznib(d->tm_year - 90), //this is a 2026er bug ;-)
+                     deznib(y),
                        d->tm_mon + 1,
                           callbuf,
                               deznib((lbid / 36) % 36),

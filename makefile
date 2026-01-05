@@ -1,6 +1,6 @@
 
 # Makefile for OpenBCM-Mailbox
-GIT_VERSION := $(shell (git describe --abbrev=4 --dirty --always --tags || echo "?????") | sed s/-dirty/D/)
+GIT_VERSION := 1.08-12
 
 CC = $(CROSS_COMPILE)g++ -fpermissive -I/usr/include/i386-linux-gnu/c++/9 -L/usr/lib/i386-linux-gnu/
 LD = $(CC)

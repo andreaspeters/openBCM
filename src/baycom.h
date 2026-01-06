@@ -23,13 +23,16 @@
 //20000502 DK2UI  config.h after lib-includes and before bcm-includes
 //                so all defines from baycom.h can be used in config.h
 //                and all defines from config.h are valid only in bcm
-//20201011 DC6AP  remove weather station and windows/dos support                 
+//20201011 DC6AP  remove weather station and windows/dos support
+//20260106 DC6AP  fix y2026 bug
 
 #ifndef _BAYCOM_H
   #define   _BAYCOM_H
 
   #define YEAR "2013"
   #define Year 1900     // 1900 + 100 = 2000
+  #define YEAR_BASE 36  // 36 = 2026  Change this in the year 2062
+                        // 72 = 2062
 
   #define __LINUX__
   #define __UNIX__

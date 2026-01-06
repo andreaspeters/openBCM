@@ -24,6 +24,7 @@
 //19990818 OE3DZW fixed y2k-bug, did not recognise mails >2000
 //20000103 DF3VI  (dzw) added flags for 7-info and 7-text
 //20000116 DK2UI  (dzw) added ui-options
+//20260105 DC6AP  fix y2026 bug
 
 #include "baycom.h"
 

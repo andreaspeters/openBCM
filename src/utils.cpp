@@ -45,6 +45,8 @@
 //20010620 DK2UI  line length limit to expandmakro()
 //20021130 DL9CU  mbamateurcallok erweitert, Bugfix autosysop
 //20251011 DC6AP  remove weatherstation support
+//20260105 DC6AP  fix y2026 bug
+//20260106 DC6AP  cleanup DOS
 
 #include "baycom.h"
 
@@ -52,26 +54,6 @@
 
 char globalpath[80];
 
-#ifdef __DOS16__
-void fixpath (char *argv0)
-//*************************************************************************
-//
-//  Stellt den Pfad fest, aus dem das Programm gestartet worden ist
-//  und legt ihn in globalpath ab
-//
-//*************************************************************************
-{
-  unsigned int i = 0;
-  char psave[80];
-
-  strcpy(psave, argv0);
-  i = strlen(psave);
-  while (i && (psave[i] != '/' && psave[i] != '\\')) i--;
-  for ( ; i + 1; i--)
-    globalpath[i] = psave[i];
-  killbackslash(globalpath);
-}
-#else
 void fixpath(char *)
 {
   char buf[80];
@@ -83,7 +65,6 @@ void fixpath(char *)
   if (! *globalpath || globalpath[strlen(globalpath) - 1] != '/')
     strcat(globalpath, "/");
 }
-#endif
 
 /*---------------------------------------------------------------------------*/
 
@@ -868,13 +849,7 @@ time_t filetime (char *name)
 
 /*---------------------------------------------------------------------------*/
 
-#ifdef __FLAT__
-#ifdef __LINUX__
- #include <utime.h>
-#else   // _Win32
- #include <winbase.h> // FILETIME, DosDateTimeToFileTime, SetFileTime
-#endif
-#endif
+#include <utime.h>
 
 int setfiletime (char *filename, unsigned long dosfiletime)     //dk2ui
 //*************************************************************************
@@ -882,38 +857,10 @@ int setfiletime (char *filename, unsigned long dosfiletime)     //dk2ui
 //*************************************************************************
 {
   if (! dosfiletime) return FALSE;
-#ifdef __FLAT__
-#ifdef __LINUX__
-    struct utimbuf ut;
-    ut.actime = ut.modtime = getunixtime(dosfiletime);
-    if (! utime(filename, &ut)) return TRUE;
-    return FALSE;
-#else   // _WIN32
-    HANDLE fh = OpenFileMapping(FILE_MAP_WRITE, TRUE, filename);
-    if (! fh) return FALSE;
-    FILETIME wfiletime;
-    LPFILETIME wft = &wfiletime;
-    if (! DosDateTimeToFileTime (
-      (unsigned int)((dosfiletime & 0xffff0000) >> 16),
-      (unsigned int) (dosfiletime & 0x0000ffff), wft))
-      return FALSE;
-    int result = SetFileTime(fh, wft, wft, wft);
-    CloseHandle(fh);
-    return result;
-#endif
-#else   // DOS16
-    int fh;
-    union fzeit
-          {
-          ftime ft;
-          unsigned long fz;
-          } fzeit;
-    fzeit.fz = dosfiletime;
-    fh = s_open(filename, "srb");
-    setftime(fh, &fzeit.ft);
-    s_close(fh);
-    return TRUE;
-#endif
+  struct utimbuf ut;
+  ut.actime = ut.modtime = getunixtime(dosfiletime);
+  if (! utime(filename, &ut)) return TRUE;
+  return FALSE;
 }
 
 /*---------------------------------------------------------------------------*/
@@ -927,12 +874,7 @@ time_t file_isreg (char *name)
 //*************************************************************************
 {
   struct stat st;
-  if (! stat(name, &st)
-#ifdef __LINUX__
-      && S_ISREG(st.st_mode))
-#else
-      && (st.st_mode & S_IFREG))
-#endif
+  if (! stat(name, &st) && S_ISREG(st.st_mode))
     return st.st_mtime;
   else return 0L;
 }
@@ -1146,7 +1088,7 @@ time_t filename2time (char *name)
   // I can fix it but thanks to the list.bcm format it will break the compatibility to 
   // filenames with 7 chars. So... Until I find a good solution, I apply this durty fix, sorry for that.
   if (tt.tm_year == 90) {
-    tt.tm_year += 36;
+    tt.tm_year += YEAR_BASE;
   }
   return ad_mktime(&tt); //ANSI time in UTC
 }

@@ -26,6 +26,8 @@
 //20000625 DK2UI  newbid() resets counter itself and not from crond
 //20000814 DK2UI  newbid() searches for uniqe BID
 //20030720 hpk    newbid() CB-BCMNET bbs'es have now a unique BID/MID
+//20260105 DC6AP  fix y2026 bug
+//20260106 DC6AP  cleanup DOS
 
 #include "baycom.h"
 
@@ -79,60 +81,6 @@ long bid_len (void)
   return filesize(BIDNAME) / sizeof(BID);
 }
 
-/*---------------------------------------------------------------------------*/
-
-//static void near bidfile_newformat(void)
-//*************************************************************************
-//
-//*************************************************************************
-/*
-{
-  FILE *fi;
-  FILE *fo;
-  BID b;
-  BID_OLD bo;
-
-  if (filetime(BIDNAME) < filetime(BIDNAME_OLD))
-  {
-    trace(replog, "bid", "converting format");
-    fi = s_fopen(BIDHASHNAME_OLD, "srb");
-    fo = s_fopen(BHTMP, "swb");
-    if (fo)
-      s_fsetopt(fo, 1);
-    if (fi && fo)
-    {
-      struct
-      { short unsigned l;
-        short unsigned h;
-      } b={0, 0};
-      while (fread(&b.l, 2, 1, fi))
-        fwrite(&b, 4, 1, fo);
-    }
-    if (fo) s_fclose(fo);
-    if (fi) s_fclose(fi);
-    fi = s_fopen(BIDNAME_OLD, "srb");
-    fo = s_fopen(BTMP, "swb");
-    if (fo)
-       s_fsetopt(fo, 1);
-    if (fi && fo)
-    {
-      while (fread(&bo, sizeof(BID_OLD), 1, fi))
-      {
-        strcpy(b.name, bo.name);
-        strcpy(b.filename, bo.filename);
-        b.nextsamehash = bo.nextsamehash;
-        fwrite(&b, sizeof(BID), 1, fo);
-      }
-    }
-    if (fi) s_fclose(fi);
-    if (fo) s_fclose(fo);
-    xunlink(BIDNAME);
-    xunlink(BIDHASHNAME);
-    xrename(BTMP, BIDNAME);
-    xrename(BHTMP, BIDHASHNAME);
-  }
-}
-*/
 /*---------------------------------------------------------------------------*/
 
 void tmpbidrein (char *bid, int number)

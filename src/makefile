@@ -1,6 +1,6 @@
 
 # Makefile for OpenBCM-Mailbox
-VERSION=1.9.0
+VERSION=2.0.0
 GIT_VERSION := ${VERSION}
 
 CC = $(CROSS_COMPILE)g++ -fpermissive -I/usr/include/i386-linux-gnu/c++/9 -L/usr/lib/i386-linux-gnu/

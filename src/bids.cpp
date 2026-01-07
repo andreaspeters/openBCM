@@ -291,7 +291,7 @@ char *newbid (void)
 // <day><month><year><call><num>  <num>.. 0..9,A..Z
 // DMYCCCCCC123
 // 012345678901     0  1 2   9 0 1
-    sprintf(bid, "%c%1X%c%s%c%c%c",
+    snprintf(bid, sizeof(bid), "%c%1X%c%s%c%c%c",
                deznib(d->tm_mday),
                  d->tm_mon + 1,
                      deznib(y),
@@ -303,7 +303,7 @@ char *newbid (void)
 // the BID/MID for the CB-BCMNET is built as following
 // <day><year><month><call>_<num>
 // DYMCCCCCC_23
-    sprintf(bid, "%c%c%1X%s_%c%c",
+    snprintf(bid, sizeof(bid), "%c%c%1X%s_%c%c",
                    deznib(d->tm_mday),
                      deznib(y),
                        d->tm_mon + 1,

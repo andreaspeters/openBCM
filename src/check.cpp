@@ -29,6 +29,7 @@
 //20001302 DF3VI  boardrej auch fuer call, verteiler
 //20011206 DF3VI  use variablename nott instead of not
 //20060214 DH8YMB checknum.bcm format changed from 16bit->32bit
+//20260122 DC6AP	check.bcm sorting problem after y2026
 
 #include "baycom.h"
 
@@ -46,6 +47,22 @@ typedef struct
 } check_typ;
 
 /*---------------------------------------------------------------------------*/
+
+static int checkmerge_cmp(const char *a, const char *b)
+{
+    char buf_a[8];
+    char buf_b[8];
+
+    strncpy(buf_a, a, 7);   buf_a[7] = '\0';
+    strncpy(buf_b, b, 7);   buf_b[7] = '\0';
+
+    time_t ta = filename2time(buf_a);
+    time_t tb = filename2time(buf_b);
+
+    if (ta < tb) return -1;
+    if (ta > tb) return 1;
+    return 0;
+}
 
 static int checkmerge (handle lfh, handle cfh, char *outf)
 //*************************************************************************
@@ -87,14 +104,14 @@ static int checkmerge (handle lfh, handle cfh, char *outf)
     if (cpos < clen) nextc = cbuf + cpos;
     else nextc = NULL;
     if (   (nextc && ! nextl)
-        || (nextc && nextl && strncmp(nextc, nextl, 7) < 0))
+        || (nextc && nextl && checkmerge_cmp(nextc, nextl) < 0))
     {
       fwrite(nextc, BLEN, 1, of);
       cpos += BLEN;
     }
     else
     if (   (! nextc && nextl)
-        || (nextc && nextl && strncmp(nextc, nextl, 7) >= 0))
+        || (nextc && nextl && checkmerge_cmp(nextc, nextl) >= 0))
     {
       fwrite(nextl, BLEN, 1, of);
       lpos += BLEN;

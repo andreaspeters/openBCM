@@ -1069,7 +1069,7 @@ time_t filename2time (char *name)
   memset(&tt, 0, sizeof(struct tm));
   if (strlen(name) > 8 || *name == ' ')
   {
-    trace(fatal, "f2time", "%s too long", name);
+		trace(fatal, "f2time", "%s too long", name);
     name[8] = 0;
   }
   strcpy((char *) s, name);
@@ -1380,7 +1380,7 @@ time_t seek_fname_all (handle fh, char *fname, char *ok)
     i = i + LBLEN;
     _read(fh, b->line, BLEN);
     b->line[7] = 0;
-//      lasttime = filename2time(b->line);
+    lasttime = filename2time(b->line);
     if (! strncmp(b->line, fname, 7))
     {
       lseek(fh, -(LBLEN), SEEK_CUR); // Eintrag genau gefunden, eins

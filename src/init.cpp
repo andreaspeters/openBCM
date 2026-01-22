@@ -69,6 +69,7 @@
 //20050917 DH8YMB added JJs INETMAILGATE
 //20061110 DH8YMB added httpshowsysopcall
 //20251011 DC6AP  added defansicolor
+//20260123 OE5HPM create missing mandatory directorys
 
 #include "baycom.h"
 #include "l2_appl.h"
@@ -1157,6 +1158,12 @@ void mbinit (void)
       line++;
     }
     s_fclose(f);
+  }
+ else
+  {
+    /* create default directories on initial startup */
+    xmkdir(m.userpath);
+    xmkdir(m.infopath);
   }
   mbparsave(); // save new defaults
   if (! m.mycalls && mbcallok(m.boxname))

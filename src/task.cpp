@@ -37,6 +37,7 @@
 //20000716 DK2UI  changed shadow variables and make code better readable
 //20021130 DH8YMB listprocess: opt & o_a: Laenge auf 12
 //20031109 DB1RAS added stack overflow detection
+//20260123 OE5HPM prevent sloopy pointer on lastfunc
 
 /*---------------------------------------------------------------------------*/
 

@@ -1134,7 +1134,6 @@ void httpd::put_homepage (char *cmd)
     html_putf("<a href=\"/cmd?cmd=d+b\"%s>boards</a> |\n", tar);
     html_putf("<a href=\"/cmd?cmd=h+index\"%s>help index</a> |\n",tar);
     html_putf("<a href=\"/cmd?cmd=log+-z\"%s>log</a> |\n", tar);
-    html_putf("<a href=\"/cmd?cmd=ps+-ru\"%s>ps</a> |\n", tar);
 #ifdef _GUEST //dh8ymb
     if (! strcmp(m.guestcall, login))
     {
@@ -1269,7 +1268,6 @@ void httpd::put_homepage (char *cmd)
     html_putf("<tr><td><a href=\"cmd?cmd=st+f\">&nbsp;%s</a></td></tr>", ms(m_http_sfstats));
     html_putf("<tr><td><a href=\"cmd?cmd=d+-n+u+m\">&nbsp;%s</a></td></tr>", ms(m_http_stuck));
     html_putf("<tr><td><a href=\"cmd?cmd=p+-sfn\">&nbsp;%s</a></td></tr>", ms(m_http_unknownbbs));
-    html_putf("<tr><td><a href=\"cmd?cmd=ps\">&nbsp;%s</a></td></tr>", ms(m_http_ps));
     html_putf("<tr><td><a href=\"cmd?cmd=u\">&nbsp;%s</a></td></tr>", ms(m_http_u));
     html_putf("<tr><td><a href=\"cmd?cmd=v\">&nbsp;%s</a></td></tr>", ms(m_http_ver));
     html_putf("</table>");

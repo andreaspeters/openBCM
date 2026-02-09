@@ -1,3 +1,7 @@
+## v2.0.2
+
+- SECURITY: hide `ps` section in http
+
 ## master
 
 - DEL: Windows and DOS build Support

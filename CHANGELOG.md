@@ -1,6 +1,6 @@
 ## v2.0.3
 
-- FIX: segmentation fault that case sometimes crashes
+- FIX: segmentation fault that cause sometimes crashes
 
 ## v2.0.2
 

@@ -1,3 +1,7 @@
+## v2.0.3
+
+- FIX: segmentation fault that case sometimes crashes
+
 ## v2.0.2
 
 - SECURITY: hide `ps` section in http

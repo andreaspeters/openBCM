@@ -28,6 +28,7 @@
 //20030720 hpk    newbid() CB-BCMNET bbs'es have now a unique BID/MID
 //20260105 DC6AP  fix y2026 bug
 //20260106 DC6AP  cleanup DOS
+//20260522 DC6AP  fix segmentation fault in newbid
 
 #include "baycom.h"
 
@@ -247,9 +248,9 @@ char *newbid (void)
   FILE *bidhf;     // offenes BID-Hashfile
   char callbuf[7]; // DH3MB
   short unsigned lbid;
-  int y = d->tm_year - 90;
 
   d = ad_comtime(ad_time());
+  int y = d->tm_year - 90;
   if (! lastday) lastday = d->tm_mday;
   tryopen(0, bidf, bidhf);
   rewind(bidf);
